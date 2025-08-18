@@ -1,0 +1,11 @@
+ptflops
+tensorboard
+torch
+torchvision
+onnx
+onnxruntime
+onnxsim
+numpy
+matplotlib
+torchinfo
+PyYAML 
