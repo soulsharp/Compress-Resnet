@@ -7,6 +7,7 @@ from torch.profiler import profile, ProfilerActivity, record_function
 
 class ModelProfiler():
     def __init__(self, model, input_res, device):
+        assert len(input_res) == 4
         self.model = model.to(device)
         self.input_shape = input_res
         self.device = device
@@ -54,7 +55,7 @@ class ModelProfiler():
         Returns:
             torch.profiler.profile: Profiler instance containing performance data.
         """
-        sample_inputs = torch.randn(input_res).to(self.device)
+        sample_inputs = torch.randn(self.input_shape).to(self.device)
         if self.device == torch.device('cuda'):
             activities = [ProfilerActivity.CUDA]
         else:
@@ -89,4 +90,4 @@ if __name__ == "__main__":
 
     profile_mem = True
     prof_results = profiler.get_runtime_reports(profile_mem)
-    profiler.get_profiler_trace(prof_results, save_path=os.path.join(os.curdir, "profiler"))     
+    profiler.get_profiler_trace(prof_results, save_path=os.path.join(os.curdir, "profiler")) 
