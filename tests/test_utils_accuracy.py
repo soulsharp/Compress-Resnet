@@ -104,7 +104,7 @@ def test_k_equals_num_classes():
     (torch.tensor([[0.1, 0.9]]), torch.tensor([[1]]), 1, AssertionError),
     # k is zero
     (torch.tensor([[0.1, 0.9]]), torch.tensor([1]), 0, AssertionError),
-    # k negative
+    # k is negative
     (torch.tensor([[0.1, 0.9]]), torch.tensor([1]), -1, AssertionError),
     # k not int
     (torch.tensor([[0.1, 0.9]]), torch.tensor([1]), 1.5, AssertionError),
