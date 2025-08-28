@@ -61,12 +61,6 @@ def test_load_yaml_invalid_yaml(mocker):
     result = load_yaml("bad.yaml")
     assert result is None
 
-@pytest.fixture
-def get_fake_logits_and_labels():
-    rand_tensor = torch.randn(4, 10)
-    labels = torch.argmax(rand_tensor, dim=1)
-    return rand_tensor, labels
-
 def get_correct_topk_labels(k):
     labels = [1, 2, 3, 4, 5]
     logits = torch.randn(5, 10)

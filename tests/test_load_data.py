@@ -1,27 +1,9 @@
 import pytest
 import torch
-from torch.utils.data import Dataset
 from torchvision import transforms as T 
 
 from data.load_data import build_train_dataset, build_eval_dataset
 from data.load_data import build_train_dataloader, build_eval_dataloader
-
-@pytest.fixture
-def dummy_dataset():
-    class DummyDataset(Dataset):
-        def __len__(self): return 10
-        def __getitem__(self, idx): 
-            return torch.randn(3, 32, 32), torch.tensor(idx % 2)
-    return DummyDataset()
-
-@pytest.fixture
-def get_cfg():
-    return {
-    "train_data_path": "/tmp",
-    "test_data_path": "/tmp",
-    "mean": [0.4914, 0.4822, 0.4465],
-    "std": [0.247, 0.243, 0.261], 
-}
 
 def test_build_train_dataset_for_transform_types(get_cfg, mocker):
     cfg = get_cfg
