@@ -4,6 +4,7 @@ from torchvision.datasets import CIFAR10
 
 from utils.utils import load_yaml
 
+
 def build_train_dataset(cfg):
     """
     Creates the CIFAR-10 training dataset with random crop, horizontal flip, and normalization.
@@ -20,16 +21,17 @@ def build_train_dataset(cfg):
     assert cfg is not None, "Config cannot be None"
 
     transform = T.Compose(
-    [
-        T.RandomCrop(32, padding=4),
-        T.RandomHorizontalFlip(),
-        T.ToTensor(),
-        T.Normalize(cfg["mean"], cfg["std"]),
-    ]
+        [
+            T.RandomCrop(32, padding=4),
+            T.RandomHorizontalFlip(),
+            T.ToTensor(),
+            T.Normalize(cfg["mean"], cfg["std"]),
+        ]
     )
     dataset = CIFAR10(root=cfg["train_data_path"], train=True, transform=transform)
 
     return dataset
+
 
 def build_eval_dataset(cfg):
     """
@@ -45,7 +47,7 @@ def build_eval_dataset(cfg):
         torchvision.datasets.CIFAR10: Evaluation dataset.
     """
     transform = T.Compose(
-    [
+        [
             T.ToTensor(),
             T.Normalize(cfg["mean"], cfg["std"]),
         ]
@@ -53,6 +55,7 @@ def build_eval_dataset(cfg):
     dataset = CIFAR10(root=cfg["test_data_path"], train=False, transform=transform)
 
     return dataset
+
 
 def build_train_dataloader(dataset, config):
     """
@@ -72,10 +75,10 @@ def build_train_dataloader(dataset, config):
     required_keys = ["train_batch_size", "num_workers", "pin_memory"]
     for key in required_keys:
         assert key in config, f"Missing key in config: {key}"
-    
+
     train_loader = torch.utils.data.DataLoader(
         dataset,
-        batch_size = config["train_batch_size"],
+        batch_size=config["train_batch_size"],
         shuffle=True,
         num_workers=config["num_workers"],
         pin_memory=config["pin_memory"],
@@ -83,6 +86,7 @@ def build_train_dataloader(dataset, config):
     )
 
     return train_loader
+
 
 def build_eval_dataloader(dataset, config):
     """
@@ -102,11 +106,11 @@ def build_eval_dataloader(dataset, config):
     required_keys = ["val_batch_size", "num_workers", "pin_memory"]
     for key in required_keys:
         assert key in config, f"Missing key in config: {key}"
-    
+
     # This dataloader is specifically meant for evaluation
     eval_loader = torch.utils.data.DataLoader(
         dataset,
-        batch_size = config["val_batch_size"],
+        batch_size=config["val_batch_size"],
         shuffle=False,
         num_workers=config["num_workers"],
         pin_memory=config["pin_memory"],
@@ -114,6 +118,7 @@ def build_eval_dataloader(dataset, config):
     )
 
     return eval_loader
+
 
 def prepare_dataloader(is_train):
     """
@@ -124,12 +129,12 @@ def prepare_dataloader(is_train):
     """
     cfg = load_yaml("config/config.yaml")
     assert cfg is not None, "Config can't be None"
-    
+
     if is_train:
         train_cfg = cfg["train"]
         train_dataset = build_train_dataset(train_cfg)
         loader = build_train_dataloader(train_dataset, train_cfg)
-    
+
     else:
         eval_cfg = cfg["eval"]
         eval_dataset = build_eval_dataset(eval_cfg)
