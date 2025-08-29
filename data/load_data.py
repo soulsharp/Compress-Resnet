@@ -122,7 +122,7 @@ def prepare_dataloader(is_train):
     Returns:
         torch.utils.data.DataLoader -> A single dataloader conditioned on the value of is_train.
     """
-    cfg = load_yaml("/config/config.yaml")
+    cfg = load_yaml("config/config.yaml")
     assert cfg is not None, "Config can't be None"
     
     if is_train:
