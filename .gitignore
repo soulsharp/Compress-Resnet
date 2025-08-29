@@ -205,3 +205,9 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+/data/train
+/data/test
+/profiler/trace.json
+/model/weights
+/logs/profiler
