@@ -1,8 +1,10 @@
 import yaml
 import torch
 
+
 class AverageMeter(object):
     """Computes and stores the average and current value"""
+
     def __init__(self):
         self.reset()
 
@@ -18,6 +20,7 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
 
+
 def load_yaml(path):
     """
     Loads a YAML file from the given path.
@@ -29,13 +32,14 @@ def load_yaml(path):
         dict or None: Parsed YAML contents, or None if loading fails.
     """
     try:
-        with open(path, 'r') as file:
+        with open(path, "r") as file:
             return yaml.safe_load(file)
     except FileNotFoundError:
         print(f"File not found: {path}")
     except yaml.YAMLError as exc:
         print(f"YAML error: {exc}")
     return None
+
 
 def count_parameters(model):
     """
@@ -48,35 +52,8 @@ def count_parameters(model):
         float: Number of parameters (in millions).
     """
     params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    return params/1000000
+    return params / 1000000
 
-def build_dataloader(dataset, config):
-    """
-    Creates a DataLoader from a dataset for evaluation.
-
-    Args:
-        dataset (torch.utils.data.Dataset): The dataset to load from.
-        config (dict): Config with keys : 'batch_size', 'num_workers', 'pin_memory'.
-
-    Returns:
-        DataLoader: Configured PyTorch DataLoader for testing/ validation.
-    """
-
-    required_keys = ["val_batch_size", "num_workers", "pin_memory"]
-    for key in required_keys:
-        assert key in config, f"Missing key in config: {key}"
-    
-    # This dataloader is specifically meant for evaluation
-    test_loader = torch.utils.data.DataLoader(
-        dataset,
-        batch_size = config["val_batch_size"],
-        shuffle=False,
-        num_workers=config["num_workers"],
-        pin_memory=config["pin_memory"],
-        drop_last=False,
-    )
-
-    return test_loader
 
 def get_topk_accuracy(logits, labels, k):
     """
@@ -90,8 +67,12 @@ def get_topk_accuracy(logits, labels, k):
     Returns:
         float: Top-K accuracy as a fraction between 0 and 1.
     """
-    assert isinstance(logits, torch.Tensor) and logits.ndim == 2, "Logits must be 2-dimensional tensors"
-    assert isinstance(labels, torch.Tensor) and labels.ndim == 1, "Labels must be 1-dimensional tensors"
+    assert (
+        isinstance(logits, torch.Tensor) and logits.ndim == 2
+    ), "Logits must be 2-dimensional tensors"
+    assert (
+        isinstance(labels, torch.Tensor) and labels.ndim == 1
+    ), "Labels must be 1-dimensional tensors"
     assert isinstance(k, int) and k > 0, "K must be an integer greater than 0"
 
     # Top-k indices along classes
@@ -102,3 +83,12 @@ def get_topk_accuracy(logits, labels, k):
     total = labels.size(0)
 
     return correct / total
+
+
+def return_train_val_cfg(path):
+    cfg = load_yaml("path")
+    assert cfg is not None
+    train_cfg = cfg["train"]
+    val_cfg = cfg["eval"]
+
+    return train_cfg, val_cfg

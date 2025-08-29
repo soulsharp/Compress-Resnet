@@ -18,7 +18,8 @@ class WarmupCosineLR(_LRScheduler):
         warmup_start_lr (float): Learning rate to start the linear warmup. Default: 0.
         eta_min (float): Minimum learning rate. Default: 0.
         last_epoch (int): The index of last epoch. Default: -1.
-"""
+    """
+
     def __init__(
         self,
         optimizer: Optimizer,
@@ -28,7 +29,7 @@ class WarmupCosineLR(_LRScheduler):
         eta_min: float = 1e-8,
         last_epoch: int = -1,
     ) -> None:
-        
+
         self.warmup_epochs = warmup_epochs
         self.max_epochs = max_epochs
         self.warmup_start_lr = warmup_start_lr
@@ -57,17 +58,23 @@ class WarmupCosineLR(_LRScheduler):
             ]
         elif self.last_epoch == self.warmup_epochs:
             return self.base_lrs
-        
+
         return [
             (
-                1 + math.cos(math.pi
+                1
+                + math.cos(
+                    math.pi
                     * (self.last_epoch - self.warmup_epochs)
-                    / (self.max_epochs - self.warmup_epochs))
+                    / (self.max_epochs - self.warmup_epochs)
+                )
             )
             / (
-                1 + math.cos(math.pi
+                1
+                + math.cos(
+                    math.pi
                     * (self.last_epoch - self.warmup_epochs - 1)
-                    / (self.max_epochs - self.warmup_epochs))
+                    / (self.max_epochs - self.warmup_epochs)
+                )
             )
             * (group["lr"] - self.eta_min)
             + self.eta_min

@@ -1,20 +1,26 @@
-dataset_eval_params:
+eval:
+  val_batch_size : 16
+  num_workers : 2
+  pin_memory : True
+  test_data_path : "data/test"
   im_size : 224
   precrop_size : 256
   im_channels : 3
   mean : [0.4914, 0.4822, 0.4465]
   std  : [0.2471, 0.2435, 0.2616]
   interpolation_mode : BICUBIC
-
-eval:
-  val_batch_size : 16
-  num_workers : 2
-  pin_memory : True
+  k : 1
 
 train:
+  mean : [0.4914, 0.4822, 0.4465]
+  std  : [0.2471, 0.2435, 0.2616]
+  train_batch_size : 32
   learning_rate : 0.01
   weight_decay : 0.01
   momentum : 0.9
   nesterov : True
   max_epochs : 50
-  checkpoint_path : "/checkpoints"
+  pin_memory : True
+  checkpoint_path : "checkpoints"
+  train_data_path : "data/train"
+  k : 1
