@@ -1,0 +1,47 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main 
+      - dev
+  pull_request:
+    branches:
+        - main
+        - dev
+
+permissions:  
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' }}
+  cancel-in-progress: true
+
+jobs:
+    test:
+        name: Call-tests
+        runs-on: ubuntu-latest
+        permissions:
+            security-events: write
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                persist-credentials: False
+
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: "3.13.0"
+            
+            - name: Install dependencies
+              run: |
+                python -m venv venv
+                source venv/bin/activate
+                python -m pip install --upgrade pip
+                python -m pip install -r requirements.txt
+            
+            - name: Run tests
+              run: pytest .
+
+
+            
