@@ -9,3 +9,6 @@ numpy
 matplotlib
 torchinfo
 PyYAML 
+pytorch-lightning
+pytest
+pytest-mock
