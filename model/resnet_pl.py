@@ -13,7 +13,7 @@ from benchmarks.benchmark import run_benchmark
 
 
 class Resnet50Module(pl.LightningModule):
-    def __init__(self, cfg, num_classes=10, pretrained_path="model/weights"):
+    def __init__(self, cfg, num_classes, pretrained_path="model/weights"):
         super().__init__()
         assert cfg is not None, "Config cannot be None"
         self.cfg = cfg
