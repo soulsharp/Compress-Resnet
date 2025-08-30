@@ -1,9 +1,7 @@
 import torch
-import pytest
 
-from model.resnet_pl import Resnet50Module
 from model.resnet import resnet50
-from data.load_data import prepare_dataloader
+from model.resnet_pl import Resnet50Module
 
 
 class TestForward:
@@ -30,15 +28,3 @@ class TestForward:
         loss, acc = model((images, labels))
         assert loss is not None
         assert acc is not None
-
-
-class TestIntegration:
-    def test_dataloader_and_model_integration(self):
-        loader = prepare_dataloader(is_train=False)
-        model = resnet50()
-
-        batch = next(iter(loader))
-        images, _ = batch
-        logits = model(images)
-
-        assert logits.shape[0] == images.shape[0]

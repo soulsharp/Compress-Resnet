@@ -1,9 +1,12 @@
 import pytest
-import torch
 from torchvision import transforms as T
 
-from data.load_data import build_train_dataset, build_eval_dataset
-from data.load_data import build_train_dataloader, build_eval_dataloader
+from data.load_data import (
+    build_eval_dataloader,
+    build_eval_dataset,
+    build_train_dataloader,
+    build_train_dataset,
+)
 
 
 def test_build_train_dataset_for_transform_types(get_cfg, mocker):
@@ -19,8 +22,8 @@ def test_build_train_dataset_for_transform_types(get_cfg, mocker):
     assert isinstance(transform.transforms[1], T.RandomHorizontalFlip)
     assert isinstance(transform.transforms[2], T.ToTensor)
     assert isinstance(transform.transforms[3], T.Normalize)
-    assert kwargs["train"] == True
-    assert value == None
+    assert kwargs["train"]
+    assert value is None
 
 
 def test_build_eval_dataset_for_transform_types(get_cfg, mocker):
@@ -34,8 +37,8 @@ def test_build_eval_dataset_for_transform_types(get_cfg, mocker):
 
     assert isinstance(transform.transforms[0], T.ToTensor)
     assert isinstance(transform.transforms[1], T.Normalize)
-    assert kwargs["train"] == False
-    assert value == None
+    assert not kwargs["train"]
+    assert value is None
 
 
 @pytest.mark.parametrize(

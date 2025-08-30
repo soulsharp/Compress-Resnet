@@ -1,5 +1,6 @@
-import torch
 import time
+
+import torch
 
 from utils.utils import AverageMeter, get_topk_accuracy
 

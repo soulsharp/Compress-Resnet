@@ -1,8 +1,8 @@
-import torch
 import os
-from ptflops import get_model_complexity_info
 
-from torch.profiler import profile, ProfilerActivity, record_function
+import torch
+from ptflops import get_model_complexity_info
+from torch.profiler import ProfilerActivity, profile, record_function
 
 
 class ModelProfiler:

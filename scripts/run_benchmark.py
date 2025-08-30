@@ -1,9 +1,8 @@
 import argparse
 
-from model.resnet_pl import Resnet50Module
-from data.load_data import prepare_dataloader
 from benchmarks.benchmark import run_benchmark
-
+from data.load_data import prepare_dataloader
+from model.resnet_pl import Resnet50Module
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Arguments for model benchmarking")

@@ -1,6 +1,7 @@
-import torch
 import pytest
-from utils.utils import AverageMeter, load_yaml, get_topk_accuracy
+import torch
+
+from utils.utils import AverageMeter, get_topk_accuracy, load_yaml
 
 
 @pytest.mark.parametrize(
@@ -70,7 +71,6 @@ def test_load_yaml_invalid_yaml(mocker):
 
 
 def get_correct_topk_labels(k):
-    labels = [1, 2, 3, 4, 5]
     logits = torch.randn(5, 10)
     rearranged_logits = torch.sort(logits, dim=1, descending=True)
 

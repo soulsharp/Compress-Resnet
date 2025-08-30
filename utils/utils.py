@@ -1,5 +1,5 @@
-import yaml
 import torch
+import yaml
 
 
 class AverageMeter(object):

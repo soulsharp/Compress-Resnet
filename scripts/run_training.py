@@ -1,4 +1,5 @@
 import argparse
+
 from tools.train import train
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
-import torch
 import argparse
-import os
 
-from profiler.profiling_scripts import ModelProfiler
+import torch
+
 from model.resnet_pl import Resnet50Module
+from profiler.profiling_scripts import ModelProfiler
 from utils.utils import return_train_val_cfg
 
 if __name__ == "__main__":

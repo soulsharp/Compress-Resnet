@@ -1,7 +1,6 @@
-import torch
 import pytest
-from torch.utils.data import Dataset, TensorDataset
-from torch.utils.data import DataLoader
+import torch
+from torch.utils.data import DataLoader, Dataset, TensorDataset
 
 from utils.utils import load_yaml
 
