@@ -21,16 +21,27 @@ def run_benchmark(model, test_loader, k):
         tuple: (avg_topk_accuracy: float, avg_time_per_sample: float)
     """
     device = next(model.parameters()).device
+    model_name = model.__class__.__name__
     accuracy = AverageMeter()
     total_samples = 0
     start_time = time.time()
 
-    for images, targets in test_loader:
-        images, targets = images.to(device), targets.to(device)
-        outputs = model(images)
-        acc = get_topk_accuracy(outputs, targets, k)
-        accuracy.update(acc, n=images.size(0))
-        total_samples += images.size(0)
+    if model_name == "Resnet50Module":
+        for images, targets in test_loader:
+            images, targets = images.to(device), targets.to(device)
+            _, acc = model((images, targets))
+            # acc = get_topk_accuracy(outputs, targets, k)
+            accuracy.update(acc, n=images.size(0))
+            total_samples += images.size(0)
+
+    # when using the plain resnet model from model/resnet.py
+    else:
+        for images, targets in test_loader:
+            images, targets = images.to(device), targets.to(device)
+            outputs = model(images)
+            acc = get_topk_accuracy(outputs, targets, k)
+            accuracy.update(acc, n=images.size(0))
+            total_samples += images.size(0)
 
     total_time = time.time() - start_time
     avg_time_per_sample = total_time / total_samples

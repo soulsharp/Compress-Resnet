@@ -29,5 +29,6 @@ if __name__ == "__main__":
         args.config, args.num_classes, args.pretrained_weights_folder
     )
     test_loader = prepare_dataloader(False)
-    report_acc = run_benchmark(model, test_loader, args.k)
+    report_acc, time_taken = run_benchmark(model, test_loader, args.k)
     print(f"Observed Accuracy : {report_acc:.3f}")
+    print(f"Time per sample: {time_taken:.3f}")
