@@ -1,9 +1,8 @@
 import argparse
 
-from model.resnet_pl import Resnet50Module
-from data.load_data import prepare_dataloader
 from benchmarks.benchmark import run_benchmark
-
+from data.load_data import prepare_dataloader
+from model.resnet_pl import Resnet50Module
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Arguments for model benchmarking")
@@ -18,14 +17,17 @@ if __name__ == "__main__":
         "--num_classes", default=10, type=int, help="Num_classes in the dataset"
     )
     parser.add_argument(
-        "--pretrained_weights_path",
-        default="model/weights/resnet50.pt",
+        "--pretrained_weights_folder",
+        default="model/weights",
         type=str,
         help="Path containing pretrained Resnet50 Model weights",
     )
 
     args = parser.parse_args()
-    model = Resnet50Module(args.num_classes, args.config, args.pretrained_weights_path)
+    model = Resnet50Module(
+        args.config, args.num_classes, args.pretrained_weights_folder
+    )
     test_loader = prepare_dataloader(False)
-    report_acc = run_benchmark(model, test_loader, args.k)
+    report_acc, time_taken = run_benchmark(model, test_loader, args.k)
     print(f"Observed Accuracy : {report_acc:.3f}")
+    print(f"Time per sample: {time_taken:.3f}")

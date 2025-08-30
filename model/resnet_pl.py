@@ -1,19 +1,19 @@
+from typing import Any
+
+import pytorch_lightning as pl
 import torch
 from torch import nn
-import pytorch_lightning as pl
-from torchmetrics import Accuracy
-from typing import Any
 from torch.optim import Optimizer
-from torch.optim.lr_scheduler import _LRScheduler
+from torchmetrics import Accuracy
 
+from benchmarks.benchmark import run_benchmark
+from data.load_data import prepare_dataloader
 from model.resnet import resnet50
 from model.scheduler import WarmupCosineLR
-from data.load_data import prepare_dataloader
-from benchmarks.benchmark import run_benchmark
 
 
 class Resnet50Module(pl.LightningModule):
-    def __init__(self, cfg, num_classes=10, pretrained_path="model/weights"):
+    def __init__(self, cfg, num_classes, pretrained_path="model/weights"):
         super().__init__()
         assert cfg is not None, "Config cannot be None"
         self.cfg = cfg

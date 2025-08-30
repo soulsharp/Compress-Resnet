@@ -1,5 +1,5 @@
-import torch
 import pytest
+import torch
 
 from benchmarks.benchmark import run_benchmark
 from model.resnet import resnet50

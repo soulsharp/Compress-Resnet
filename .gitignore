@@ -209,5 +209,4 @@ __marimo__/
 /data/train
 /data/test
 /profiler/trace.json
-/model/weights
 /logs/profiler

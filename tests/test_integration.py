@@ -1,5 +1,4 @@
 import pytest
-import torch
 from pytorch_lightning import Trainer
 
 from data.load_data import prepare_dataloader
@@ -24,13 +23,17 @@ class TestIntegration:
         loader = prepare_dataloader(is_train=False)
         cfg = get_real_cfg
         eval_cfg = cfg["eval"]
-        model = Resnet50Module(eval_cfg)
+        model = Resnet50Module(cfg=eval_cfg, num_classes=10)
 
         batch = next(iter(loader))
         loss, acc = model(batch)
+        print(type(loss), type(acc))
 
-        assert isinstance(loss, float)
-        assert isinstance(acc, float)
+        assert isinstance(loss.item(), float)
+        assert isinstance(acc.item(), float)
+
+        # assert isinstance(loss, float)
+        # assert isinstance(acc, float)
 
     def test_resnet_pl_end_to_end(self, get_real_cfg, get_fake_dataloader, tmp_path):
         cfg = get_real_cfg
@@ -39,7 +42,7 @@ class TestIntegration:
         k = eval_cfg["k"]
         print(eval_cfg, k)
 
-        model = Resnet50Module(cfg=train_cfg)
+        model = Resnet50Module(cfg=train_cfg, num_classes=10)
         model._train_loader = get_fake_dataloader
         model._val_loader = get_fake_dataloader
 

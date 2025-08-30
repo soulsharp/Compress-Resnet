@@ -28,7 +28,9 @@ def build_train_dataset(cfg):
             T.Normalize(cfg["mean"], cfg["std"]),
         ]
     )
-    dataset = CIFAR10(root=cfg["train_data_path"], train=True, transform=transform)
+    dataset = CIFAR10(
+        root=cfg["train_data_path"], train=True, transform=transform, download=True
+    )
 
     return dataset
 
@@ -52,7 +54,9 @@ def build_eval_dataset(cfg):
             T.Normalize(cfg["mean"], cfg["std"]),
         ]
     )
-    dataset = CIFAR10(root=cfg["test_data_path"], train=False, transform=transform)
+    dataset = CIFAR10(
+        root=cfg["test_data_path"], train=False, transform=transform, download=True
+    )
 
     return dataset
 
