@@ -6,19 +6,26 @@
 **/*.py[cod]
 
 # Train datasets
-data/train/
-data/test/
+/data/train/
+/data/test/
 
 # Profiling scripts/ logs
-profiler/
+/profiler/
 
 # Tests
-tests/
+/tests/
 
 # Model weights and checkpoints
-model/weights
-checkpoints/
+/model/weights
+/checkpoints/
+
+# Model compression logic
+/compress/
 
 # Temp files
 *.log
 *.tmp
+
+# Misc
+/LICENSE
+/README.md
