@@ -1,0 +1,24 @@
+# Github workflows
+.github/workflows/
+
+# Python cache
+**/__pycache__/
+**/*.py[cod]
+
+# Train datasets
+data/train/
+data/test/
+
+# Profiling scripts/ logs
+profiler/
+
+# Tests
+tests/
+
+# Model weights and checkpoints
+model/weights
+checkpoints/
+
+# Temp files
+*.log
+*.tmp
