@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   lint:
-    name: Quick Lint (PRs only)
+    name: Quick Lint
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
