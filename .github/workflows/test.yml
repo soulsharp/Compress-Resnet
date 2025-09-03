@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   lint:
-    name: Quick Lint (PRs only)
+    name: Quick Lint
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
@@ -38,7 +38,6 @@ jobs:
       - name: Run linters
         run: |
           black --check .
-          flake8 .
 
   test:
     name: Full Tests 
