@@ -1,0 +1,11 @@
+ptflops==0.7.5
+tensorboard==2.19.0
+torch==2.8.0
+torchvision==0.23.0
+numpy==2.0.2
+matplotlib==3.10.0
+torchinfo==1.8.0
+PyYAML==6.0.2
+pytorch-lightning==2.5.4
+pytest==8.4.1
+pytest-mock==3.14.1
